@@ -1,0 +1,101 @@
+import 'package:flutter/material.dart';
+import 'dart:async';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: ContadorSegundos(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+class ContadorSegundos extends StatefulWidget {
+  const ContadorSegundos({super.key});
+
+  @override
+  State<ContadorSegundos> createState() => _ContadorSegundosState();
+}
+
+class _ContadorSegundosState extends State<ContadorSegundos> {
+
+  int contadorSegundos = 0;
+  Timer? timer;
+
+  @override
+  void initState() {
+    super.initState();
+
+    timer = Timer.periodic(
+      const Duration(seconds: 1),
+      (Timer t) {
+        setState(() {
+          contadorSegundos++;
+        });
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+
+      backgroundColor: Colors.blue[100], // color de fondo
+
+      appBar: AppBar(
+        title: const Text("Contador de segundos"),
+        centerTitle: true,
+      ),
+
+      body: Center(
+        child: Container(
+          padding: const EdgeInsets.all(25),
+
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(15),
+            boxShadow: const [
+              BoxShadow(
+                blurRadius: 8,
+                color: Colors.black26,
+                offset: Offset(0, 4),
+              )
+            ],
+          ),
+
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+
+  
+
+              const SizedBox(height: 15),
+
+              Text(
+                "Contador: $contadorSegundos",
+                style: const TextStyle(
+                  fontSize: 35,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
